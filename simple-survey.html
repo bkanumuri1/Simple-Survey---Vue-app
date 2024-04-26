@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>simple survey - Vue app</title>
+    </head>
+    <body>
+        <script src="https://unpkg.com/vue@3"> </script>
+        <h1>Answer me these questions 3: </h1>
+        <div id="app">
+            <ol>
+                <li>What is your name?</li>
+                <input v-model="answer1" type="text" v-on:keyup="checkIdk">
+                <li>What is your quest?</li>
+                <input v-model="answer2" type="text" v-on:keyup="checkIdk">
+                <li v-if="buttonClick">What is the airspeed velocity of an unladen swallow?</li>
+                <li  v-else>What is your favourite color?</li>
+                <input v-model="answer3" type="text" v-on:keyup="checkIdk">
+            </ol>
+            <span v-if="idkCheck == null"></span>
+            <span v-else-if="checkIdk(idkCheck) == true">Knight: AAAAAAAAHHHHHHHHHHH!!!</span> 
+            <span v-else-if="checkIdk(idkCheck) == false">Bridgekeeper: Alright, off you go then</span>
+            <br>
+            <button @click="onGoAgain">Go again</button> <br>
+        </div>
+        <script>
+            let app = Vue.createApp({
+                data(){
+                    return {
+                        buttonClick: false,
+                        response: null,
+                        answer1: '', answer2: '', answer3: '', 
+                        idkCheck: '',
+                    }
+                },
+                methods: {
+                    onGoAgain(){
+                        this.buttonClick = !this.buttonClick;
+                        this.answer1= "";
+                        this.answer2= "";
+                        this.answer3= "";
+                    },
+                    checkIdk(idkCheck){
+                        if(this.answer1 == "idk" || this.answer2 == "idk" || this.answer3 == "idk"){
+                            return this.idkCheck= true;
+                        }
+                        else if(this.answer1.length>0 && this.answer2.length>0 && this.answer3.length>0){
+                            return this.idkCheck = false;
+                        } 
+                    },                     
+                },
+            }).mount('#app')
+        </script>       
+    </body>
+</html>
